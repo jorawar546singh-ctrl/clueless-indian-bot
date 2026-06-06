@@ -288,10 +288,18 @@ def main():
                     fired_milestone = m
                     alerts.append(format_trending_alert(ticker, entry, st, m))
 
+        # Flag if this ticker was first alerted today (used by dashboard FRESH badge + top-pin)
+        try:
+            first_dt = datetime.fromisoformat(entry["first_alerted"])
+            today_alerted = first_dt.date() == datetime.now().date()
+        except Exception:
+            today_alerted = False
+
         new_streaks.append({
             "ticker": ticker,
             "breakout_price": entry["breakout_price"],
             "first_alerted": entry["first_alerted"],
+            "today_alerted": today_alerted,
             "original_grade": entry.get("original_grade"),
             "original_tier": entry.get("original_tier"),
             "days_since_breakout": st["days_since_breakout"],

@@ -449,6 +449,29 @@
   }
   #clearThresholds:hover { color: var(--amber); border-color: var(--amber); }
 
+
+  /* === FRESH badge for stocks alerted today === */
+  .fresh-badge {
+    display: inline-block;
+    background: rgba(80, 230, 130, 0.18);
+    color: var(--green);
+    border: 1px solid rgba(80, 230, 130, 0.55);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    margin-left: 6px;
+    text-transform: uppercase;
+    animation: freshPulse 2.4s ease-in-out infinite;
+  }
+  @keyframes freshPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(80, 230, 130, 0); }
+    50% { box-shadow: 0 0 8px 2px rgba(80, 230, 130, 0.35); }
+  }
+  .stack-card.is-fresh { border-color: rgba(80, 230, 130, 0.45); box-shadow: 0 0 14px rgba(80, 230, 130, 0.12); }
+  tr.is-fresh td { background: rgba(80, 230, 130, 0.04); }
+
   /* === COLLAPSIBLE SECTIONS === */
   .collapsible-header {
     cursor: pointer;
@@ -727,13 +750,8 @@
     </div>
   </div>
 
-  <div class="stat-row">
-    <div class="stat gold"><div class="label">🌟 ELITE</div><div class="value" id="statElite">—</div><div class="meta">Tech + fundamentals</div></div>
-    <div class="stat amber"><div class="label">Total</div><div class="value" id="statCount">—</div><div class="meta" id="statCountMeta">All tiers</div></div>
-    <div class="stat red"><div class="label">Avg Risk</div><div class="value" id="statRisk">—</div><div class="meta">Entry → stop</div></div>
-  </div>
 
-  <div id="tiersWrap"></div>
+
 
   <div class="history" data-section="history">
     <div class="panel-head collapsible-header">
@@ -797,7 +815,6 @@ let thresholds = {
   reqBox: _wl.reqBox,
 };
 let cachedStreaks = [];
-let cachedHits = [];
 
 function persistWatchlistState() {
   saveState(WATCHLIST_STORAGE_KEY, {
@@ -808,7 +825,7 @@ function persistWatchlistState() {
   });
 }
 
-const gainersDefaults = { window: 30, limit: 20 };
+const gainersDefaults = { window: 7, limit: 20 };
 const _gn = loadState(GAINERS_STORAGE_KEY, gainersDefaults);
 let gainerWindow = _gn.window;
 let gainerLimit = _gn.limit;
@@ -954,19 +971,6 @@ function renderCard(h){
   return `<div class="card ${tierClass}"><div class="grade-badge">${gradeLabel}</div><div class="ticker-row"><div class="ticker">${bareTicker(h.ticker)}</div><div class="price">₹${h.price}</div></div><div class="score-row"><span>Technical</span><span class="score-num">${h.score}</span><span>/100</span></div>${sparkline(h.spark)}<div class="breakdown"><div class="bd-title">Technical breakdown</div>${barRow('Volume',sb.volume||0)}${barRow('Clarity',sb.clarity||0)}${barRow('Box Quality',sb.box_quality||0)}${barRow('Risk/Reward',sb.risk_reward||0)}${barRow('Trend',sb.trend||0)}</div>${fundSection}<div class="metrics"><div><div class="k">Entry</div><div class="v">₹${h.price}</div></div><div><div class="k">Vol Ratio</div><div class="v pos">${h.vol_ratio}×</div></div><div><div class="k">Stop</div><div class="v neg">₹${h.suggested_stop}</div></div><div><div class="k">Target</div><div class="v pos">₹${h.target_30pct}</div></div><div><div class="k">Risk</div><div class="v ${riskClass}">${h.risk_pct}%</div></div><div><div class="k">R/R</div><div class="v">${h.rr_ratio}:1</div></div></div>${slBlock(h.suggested_stop)}${sizingPill(h.price, h.suggested_stop)}<div class="links"><a href="https://finance.yahoo.com/quote/${h.ticker}" target="_blank" rel="noopener">Yahoo</a><a href="https://www.screener.in/company/${bareTicker(h.ticker)}/" target="_blank" rel="noopener">Screener</a><a href="https://www.tradingview.com/symbols/NSE-${bareTicker(h.ticker)}/" target="_blank" rel="noopener">TV</a></div></div>`;
 }
 
-function renderTiers(hits){
-  cachedHits = hits;
-  const elite=hits.filter(h=>h.fund_tag==='ELITE');
-  const buckets={CLEAN:[],SOLID:[],MARGINAL:[],WEAK:[]};
-  hits.forEach(h=>{if(h.fund_tag==='ELITE')return;(buckets[h.tier]||buckets.WEAK).push(h);});
-  let html=''; let any=false;
-  if(elite.length){any=true;html+=`<div class="tier-section" data-section="tier-elite"><div class="panel-head collapsible-header"><h2 style="color:var(--gold)">🌟 ELITE Signals</h2><span class="count">${elite.length}</span><span class="muted">Tech + fundamentals aligned</span></div><div class="collapsible-body"><div class="grid">${elite.map(renderCard).join('')}</div></div></div>`;}
-  const sections=[{key:'CLEAN',label:'🟢 Primary Setups',cls:'clean'},{key:'SOLID',label:'🟡 Solid Setups',cls:'solid'},{key:'MARGINAL',label:'🟠 Marginal Setups',cls:'marginal'},{key:'WEAK',label:'🔴 Weak Setups',cls:'weak'}];
-  for(const s of sections){const items=buckets[s.key];if(!items.length)continue;any=true;html+=`<div class="tier-section" data-section="tier-${s.key.toLowerCase()}"><div class="panel-head collapsible-header"><h2 class="${s.cls}">${s.label}</h2><span class="count">${items.length}</span></div><div class="collapsible-body"><div class="grid">${items.map(renderCard).join('')}</div></div></div>`;}
-  if(!any) html=`<div class="empty"><div class="big">No breakouts right now</div><div class="sub">Patience is the edge.</div></div>`;
-  $('#tiersWrap').innerHTML=html;
-  initCollapsibles();  // wire up any newly-rendered tier sections
-}
 
 function renderPositions(data){
   const positions=data.positions||[];
@@ -1035,6 +1039,11 @@ function applyThresholds(streaks, t) {
 function applySort(streaks, by, desc) {
   const sorted = [...streaks];
   sorted.sort((a, b) => {
+    // Always pin today's breakouts to the top, regardless of selected sort
+    const af = a.today_alerted ? 1 : 0;
+    const bf = b.today_alerted ? 1 : 0;
+    if (af !== bf) return bf - af;
+
     let av, bv;
     if (by === 'ticker') { av = a.ticker || ''; bv = b.ticker || ''; }
     else if (by === 'original_grade') {
@@ -1084,7 +1093,9 @@ function renderStreakList() {
     const lateStop = s.today_close * 0.93;  // 7% below current = Darvas late-entry stop
     const slLate = stopLimitPair(lateStop);
     const slCell = slLate ? `<span style="color:var(--red);font-weight:600">₹${slLate.stop}</span> <span style="color:var(--fg-faint)">/ ₹${slLate.limit}</span>` : '—';
-    return `<tr><td><span class="t-ticker">${bareTicker(s.ticker)}</span><span class="pos-tag ${statusTag}">${statusLabel}</span></td><td>₹${s.breakout_price.toFixed(2)} <span style="color:var(--fg-faint)">· ${(s.first_alerted||'').slice(5,10)}</span></td><td>₹${s.today_close.toFixed(2)}</td><td class="${gainCls}">${s.pct_from_breakout>=0?'+':''}${s.pct_from_breakout.toFixed(1)}%</td><td>${s.days_since_breakout}d</td><td><strong>${s.current_streak}</strong> <span style="color:var(--fg-faint)">(peak ${s.peak_streak})</span></td><td style="font-size:11px">${slCell}</td><td style="color:var(--fg-dim)">Vol ${volOk} · Box ${boxOk}</td></tr>`;
+    const freshBadge = s.today_alerted ? '<span class="fresh-badge">NEW</span>' : '';
+    const trCls = s.today_alerted ? ' class="is-fresh"' : '';
+    return `<tr${trCls}><td><span class="t-ticker">${bareTicker(s.ticker)}</span>${freshBadge}<span class="pos-tag ${statusTag}">${statusLabel}</span></td><td>₹${s.breakout_price.toFixed(2)} <span style="color:var(--fg-faint)">· ${(s.first_alerted||'').slice(5,10)}</span></td><td>₹${s.today_close.toFixed(2)}</td><td class="${gainCls}">${s.pct_from_breakout>=0?'+':''}${s.pct_from_breakout.toFixed(1)}%</td><td>${s.days_since_breakout}d</td><td><strong>${s.current_streak}</strong> <span style="color:var(--fg-faint)">(peak ${s.peak_streak})</span></td><td style="font-size:11px">${slCell}</td><td style="color:var(--fg-dim)">Vol ${volOk} · Box ${boxOk}</td></tr>`;
   }).join('');
   tableWrap.innerHTML = `<div class="data-table-wrap"><table class="data-table"><thead><tr><th>Ticker</th><th>Breakout</th><th>Now</th><th>Gain</th><th>Age</th><th>Streak</th><th>Stop / Limit*</th><th>Today</th></tr></thead><tbody>${rows}</tbody></table><div style="font-size:9.5px;color:var(--fg-faint);margin-top:8px;letter-spacing:0.05em">* Late-entry stop-limit = 7% below current price (Darvas late-entry rule). For entering a stock already running. Paste straight into Wealthsimple.</div></div>`;
 
@@ -1097,7 +1108,9 @@ function renderStreakList() {
     const cardCls = s.status === 'trending' ? 'trending' : (s.status === 'fading' ? 'fading' : '');
     const sign = s.pct_from_breakout >= 0 ? '+' : '';
     const lateStop = s.today_close * 0.93;
-    return `<div class="stack-card ${cardCls}"><div class="stack-head"><div class="ticker">${bareTicker(s.ticker)}</div><div class="gain ${gainCls}">${sign}${s.pct_from_breakout.toFixed(1)}%</div></div><div class="stack-grid"><div class="stack-item"><div class="k">Age</div><div class="v">${s.days_since_breakout} days</div></div><div class="stack-item"><div class="k">Breakout</div><div class="v">₹${s.breakout_price.toFixed(2)}</div></div><div class="stack-item"><div class="k">Now</div><div class="v">₹${s.today_close.toFixed(2)}</div></div><div class="stack-item"><div class="k">Streak</div><div class="v"><strong>${s.current_streak}</strong> (peak ${s.peak_streak})</div></div><div class="stack-item"><div class="k">Today</div><div class="v">${volOk} · ${boxOk}</div></div></div>${slBlock(lateStop, 'IF ENTERING NOW · 7% STOP')}${sizingPill(s.today_close, lateStop, 'SIZE @ 2% RISK · LATE ENTRY')}<div class="stack-tags"><span class="pos-tag ${statusTag}">${statusLabel}</span></div></div>`;
+    const freshCls = s.today_alerted ? ' is-fresh' : '';
+    const freshBadge = s.today_alerted ? '<span class="fresh-badge">NEW</span>' : '';
+    return `<div class="stack-card ${cardCls}${freshCls}"><div class="stack-head"><div class="ticker">${bareTicker(s.ticker)}${freshBadge}</div><div class="gain ${gainCls}">${sign}${s.pct_from_breakout.toFixed(1)}%</div></div><div class="stack-grid"><div class="stack-item"><div class="k">Age</div><div class="v">${s.days_since_breakout} days</div></div><div class="stack-item"><div class="k">Breakout</div><div class="v">₹${s.breakout_price.toFixed(2)}</div></div><div class="stack-item"><div class="k">Now</div><div class="v">₹${s.today_close.toFixed(2)}</div></div><div class="stack-item"><div class="k">Streak</div><div class="v"><strong>${s.current_streak}</strong> (peak ${s.peak_streak})</div></div><div class="stack-item"><div class="k">Today</div><div class="v">${volOk} · ${boxOk}</div></div></div>${slBlock(lateStop, 'IF ENTERING NOW · 7% STOP')}${sizingPill(s.today_close, lateStop, 'SIZE @ 2% RISK · LATE ENTRY')}<div class="stack-tags"><span class="pos-tag ${statusTag}">${statusLabel}</span></div></div>`;
   }).join('');
 }
 
@@ -1290,24 +1303,12 @@ async function loadAll(){
   document.body.classList.add('scanning');
   try{
     const res=await fetch(LATEST+'?_='+Date.now());
-    if(!res.ok) throw new Error('no latest');
-    const data=await res.json();
-    $('#lastScan').textContent=fmtTime(data.timestamp);
-    $('#statCount').textContent=data.count;
-    const hits=data.hits||[];
-    const elite=hits.filter(h=>h.fund_tag==='ELITE');
-    $('#statElite').textContent=elite.length;
-    if(hits.length){
-      const avgRisk=(hits.reduce((a,h)=>a+h.risk_pct,0)/hits.length).toFixed(1);
-      $('#statRisk').textContent=avgRisk+'%';
-      $('#statCountMeta').textContent=`${elite.length} elite · ${hits.length-elite.length} other`;
-    } else {
-      $('#statRisk').textContent='—';
-      $('#statCountMeta').textContent='Across all tiers';
+    if(res.ok){
+      const data=await res.json();
+      $('#lastScan').textContent=fmtTime(data.timestamp);
     }
-    renderTiers(hits);
   }catch(e){
-    $('#tiersWrap').innerHTML=`<div class="empty"><div class="big">No scan data yet</div></div>`;
+    // latest.json may not exist on first run; streak/positions still load below
   }
   try{ const r=await fetch(POS_STATE+'?_='+Date.now()); renderPositions(r.ok?(await r.json()):{positions:[]}); }catch{renderPositions({positions:[]});}
   try{ const r=await fetch(STREAKS_STATE+'?_='+Date.now()); setStreaks(r.ok?(await r.json()):{streaks:[]}); }catch{setStreaks({streaks:[]});}
@@ -1340,8 +1341,7 @@ $('#refreshBtn').addEventListener('click',loadAll);
     const v = parseFloat(e.target.value);
     if (v > 0) {
       setAccountSize(v);
-      // Re-render breakout cards and watchlist so sizing updates live
-      if (cachedHits.length) renderTiers(cachedHits);
+      // Re-render watchlist so sizing pill updates live
       if (cachedStreaks.length) renderStreakList();
     }
   });
