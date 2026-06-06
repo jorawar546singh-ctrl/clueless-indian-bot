@@ -107,6 +107,12 @@ def analyze_streak(ticker, breakout_entry, data):
     # subsequent days append to this and the streak logic kicks in.
     data_post = data[data.index.date >= breakout_date.date()]
     if data_post.empty:
+        # Breakout date is in the future relative to available data. Happens when scanner
+        # runs outside post-close hours (weekend/holiday/pre-market) and stamps wallclock
+        # time but yfinance only has the prior trading day's bar. Use that bar as the
+        # breakout bar -- streak will begin from there.
+        data_post = data.iloc[-1:]
+    if data_post.empty:
         return None
 
     today_row = data_post.iloc[-1]
