@@ -44,7 +44,6 @@ DEFAULT_HEADERS = {
 
 # NSE archives URLs for index constituents
 NIFTY_500_URL = "https://nsearchives.nseindia.com/content/indices/ind_nifty500list.csv"
-NIFTY_SC250_URL = "https://nsearchives.nseindia.com/content/indices/ind_niftysmallcap250list.csv"
 
 # Static fallback CSV (bundled in repo as data/nifty500.csv).
 # Refresh quarterly: https://nsearchives.nseindia.com/content/indices/ind_nifty500list.csv
@@ -173,17 +172,20 @@ def load_static_csv():
 def get_all_candidates():
     """
     Build the scan universe with 3-layer fallback:
-      1. Live NSE archives (NIFTY 500 + Smallcap 250) -- current as of today
+      1. Live NSE archives (NIFTY 500) -- current as of today
       2. Bundled data/nifty500.csv + RECENT_ADDITIONS -- reliable floor
       3. Hardcoded FALLBACK_UNIVERSE -- last resort
+
+    Note: NIFTY Smallcap 250 is a strict SUBSET of NIFTY 500 (it's the bottom-
+    250 by market cap *within* NIFTY 500). Fetching it adds no new tickers --
+    it just gets de-duped away. Scanning NIFTY 500 covers the entire mid+
+    smallcap range you can responsibly trade at a small account size.
     """
     print("Building NSE scan universe...")
     nifty500 = fetch_nse_index(NIFTY_500_URL, "NIFTY 500")
-    smallcap = fetch_nse_index(NIFTY_SC250_URL, "NIFTY Smallcap 250")
 
     raw = []
     if nifty500: raw.extend(nifty500)
-    if smallcap: raw.extend(smallcap)
 
     if not raw:
         # Layer 2: bundled static CSV + recent additions
