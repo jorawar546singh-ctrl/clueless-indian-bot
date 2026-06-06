@@ -102,7 +102,10 @@ def analyze_streak(ticker, breakout_entry, data):
     except Exception:
         breakout_date = datetime.now() - timedelta(days=1)
 
-    data_post = data[data.index.date > breakout_date.date()]
+    # Include the breakout day itself so today's breakouts show up immediately.
+    # On the breakout day, "post" data is just today's single bar (price ≈ breakout_price);
+    # subsequent days append to this and the streak logic kicks in.
+    data_post = data[data.index.date >= breakout_date.date()]
     if data_post.empty:
         return None
 
@@ -144,7 +147,7 @@ def analyze_streak(ticker, breakout_entry, data):
     if streak == 0 and len(closes) >= 1 and closes[-1] > breakout_price:
         streak = 1
 
-    days_since_breakout = len(data_post)
+    days_since_breakout = max(0, len(data_post) - 1)
 
     red_streak = 0
     for i in range(len(closes) - 1, 0, -1):
