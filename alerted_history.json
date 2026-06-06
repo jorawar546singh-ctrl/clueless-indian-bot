@@ -1,0 +1,47 @@
+[
+  {
+    "ticker": "ZEEL.NS",
+    "first_alerted": "2026-06-06T04:04:20",
+    "breakout_price": 112.27,
+    "breakout_box_top": 107.5,
+    "original_grade": "B+",
+    "original_tier": "SOLID",
+    "original_score": 80
+  },
+  {
+    "ticker": "ACUTAAS.NS",
+    "first_alerted": "2026-06-06T04:04:20",
+    "breakout_price": 3328.3,
+    "breakout_box_top": 3188.1,
+    "original_grade": "B+",
+    "original_tier": "SOLID",
+    "original_score": 79
+  },
+  {
+    "ticker": "HSCL.NS",
+    "first_alerted": "2026-06-06T04:04:20",
+    "breakout_price": 685.05,
+    "breakout_box_top": 646.0,
+    "original_grade": "B",
+    "original_tier": "SOLID",
+    "original_score": 72
+  },
+  {
+    "ticker": "ACMESOLAR.NS",
+    "first_alerted": "2026-06-06T04:04:20",
+    "breakout_price": 356.65,
+    "breakout_box_top": 347.6,
+    "original_grade": "C+",
+    "original_tier": "MARGINAL",
+    "original_score": 69
+  },
+  {
+    "ticker": "ADANIENT.NS",
+    "first_alerted": "2026-06-06T04:04:20",
+    "breakout_price": 3048.2,
+    "breakout_box_top": 3027.5,
+    "original_grade": "C+",
+    "original_tier": "MARGINAL",
+    "original_score": 66
+  }
+]
