@@ -1,5 +1,17 @@
 [
   {
+    "timestamp": "2026-06-07T04:10:55",
+    "count": 5,
+    "tickers": [
+      "ZEEL",
+      "ACUTAAS",
+      "HSCL",
+      "ACMESOLAR",
+      "ADANIENT"
+    ],
+    "clean_count": 0
+  },
+  {
     "timestamp": "2026-06-07T04:00:20",
     "count": 5,
     "tickers": [
