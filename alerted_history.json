@@ -52,5 +52,23 @@
     "original_grade": "B+",
     "original_tier": "SOLID",
     "original_score": 76
+  },
+  {
+    "ticker": "FORTIS.NS",
+    "first_alerted": "2026-06-08T06:57:11",
+    "breakout_price": 1000.0,
+    "breakout_box_top": 992.7,
+    "original_grade": "C+",
+    "original_tier": "MARGINAL",
+    "original_score": 66
+  },
+  {
+    "ticker": "KIMS.NS",
+    "first_alerted": "2026-06-08T06:57:11",
+    "breakout_price": 803.0,
+    "breakout_box_top": 797.0,
+    "original_grade": "C+",
+    "original_tier": "MARGINAL",
+    "original_score": 66
   }
 ]

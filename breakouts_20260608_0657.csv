@@ -1,0 +1,5 @@
+ticker,price,box_top,box_bottom,pct_above_box,vol_today,vol_avg_20d,vol_ratio,suggested_stop,target_30pct,risk_pct,rr_ratio,box_range_pct,ma20,ma_rising,price_vs_ma20_pct,score,grade,tier,emoji
+CCL.NS,1140.0,1134.0,1043.0,0.53,987672,188665,5.24,1111.32,1482.0,2.52,11.92,8.02,1085.72,True,5.0,82,B+,SOLID,🟡
+FORTIS.NS,1000.0,992.7,899.1,0.74,2704350,1306406,2.07,972.85,1300.0,2.72,11.05,9.43,957.67,True,4.42,66,C+,MARGINAL,🟠
+KIMS.NS,803.0,797.0,716.0,0.75,1322757,659846,2.0,781.06,1043.9,2.73,10.98,10.16,762.75,True,5.28,66,C+,MARGINAL,🟠
+ZEEL.NS,114.17,113.7,81.82,0.41,91084064,39037814,2.33,111.43,148.42,2.4,12.48,28.04,91.56,True,24.7,56,C,MARGINAL,🟠
