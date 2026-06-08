@@ -1,5 +1,11 @@
 [
   {
+    "timestamp": "2026-06-08T20:00:42",
+    "count": 0,
+    "tickers": [],
+    "clean_count": 0
+  },
+  {
     "timestamp": "2026-06-08T14:40:08",
     "count": 6,
     "tickers": [
