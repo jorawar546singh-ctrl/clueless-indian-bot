@@ -43,5 +43,14 @@
     "original_grade": "C+",
     "original_tier": "MARGINAL",
     "original_score": 66
+  },
+  {
+    "ticker": "CCL.NS",
+    "first_alerted": "2026-06-08T06:43:35",
+    "breakout_price": 1144.1,
+    "breakout_box_top": 1134.0,
+    "original_grade": "B+",
+    "original_tier": "SOLID",
+    "original_score": 76
   }
 ]

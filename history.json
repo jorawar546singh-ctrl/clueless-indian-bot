@@ -1,5 +1,14 @@
 [
   {
+    "timestamp": "2026-06-08T06:43:35",
+    "count": 2,
+    "tickers": [
+      "CCL",
+      "ZEEL"
+    ],
+    "clean_count": 0
+  },
+  {
     "timestamp": "2026-06-07T04:10:55",
     "count": 5,
     "tickers": [
