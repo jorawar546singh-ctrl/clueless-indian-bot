@@ -105,6 +105,7 @@ def analyze_streak(ticker, breakout_entry, data):
     # Include the breakout day itself so today's breakouts show up immediately.
     # On the breakout day, "post" data is just today's single bar (price ≈ breakout_price);
     # subsequent days append to this and the streak logic kicks in.
+    data = data.dropna(subset=["Close"])
     data_post = data[data.index.date >= breakout_date.date()]
     if data_post.empty:
         # Breakout date is in the future relative to available data. Happens when scanner
@@ -115,6 +116,9 @@ def analyze_streak(ticker, breakout_entry, data):
     if data_post.empty:
         return None
 
+    data_post = data_post.dropna(subset=["Close"])
+    if data_post.empty:
+        return None
     today_row = data_post.iloc[-1]
     today_close = float(today_row["Close"])
     today_volume = float(today_row["Volume"])
