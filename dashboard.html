@@ -987,7 +987,7 @@ function renderPositions(data){
   const openCount=positions.filter(p=>p.status==='open').length;
   const stoppedCount=positions.filter(p=>p.status!=='open').length;
   cnt.textContent=`${openCount} open · ${stoppedCount} stopped`;
-  totalEl.textContent=(total>=0?'+':'')+'$'+total.toFixed(2);
+  totalEl.textContent=(total>=0?'+':'')+'₹'+total.toFixed(2);
   totalEl.className='right total-pl '+(total>=0?'pl-pos':'pl-neg');
   const rows=positions.map(p=>{
     const plCls=p.pl_dollars>=0?'pl-pos':'pl-neg', gainCls=p.gain_pct>=0?'pl-pos':'pl-neg';
