@@ -6,16 +6,16 @@
       "entry_date": "2026-06-07",
       "shares": 50.0,
       "initial_stop": 104.41,
-      "last_price": 114.15,
+      "last_price": 111.09,
       "running_high": 117.2,
       "current_stop": 104.41,
       "stop_rule": "initial",
-      "gain_pct": 1.67,
+      "gain_pct": -1.05,
       "high_gain_pct": 4.39,
-      "pl_dollars": 94.0,
+      "pl_dollars": -59.0,
       "last_milestone": 0,
       "status": "open",
-      "last_checked": "2026-06-08T06:57:13",
+      "last_checked": "2026-06-08T14:40:12",
       "notes": "ZEEL. Zerodha. Darvas breakout. 50 shares at 112.27."
     },
     {
@@ -24,18 +24,18 @@
       "entry_date": "2026-06-07",
       "shares": 1.0,
       "initial_stop": 3095.32,
-      "last_price": 3293.7,
+      "last_price": 3316.2,
       "running_high": 3444.3,
       "current_stop": 3095.32,
       "stop_rule": "initial",
-      "gain_pct": -2.9,
+      "gain_pct": -2.24,
       "high_gain_pct": 1.54,
-      "pl_dollars": -98.5,
+      "pl_dollars": -76.0,
       "last_milestone": 0,
       "status": "open",
-      "last_checked": "2026-06-08T06:57:13",
+      "last_checked": "2026-06-08T14:40:12",
       "notes": "ACUTAAS. Zerodha. Darvas breakout. 1 share at 3392.20."
     }
   ],
-  "updated": "2026-06-08T06:57:13"
+  "updated": "2026-06-08T14:40:12"
 }

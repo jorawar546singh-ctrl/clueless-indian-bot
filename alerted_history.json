@@ -70,5 +70,41 @@
     "original_grade": "C+",
     "original_tier": "MARGINAL",
     "original_score": 66
+  },
+  {
+    "ticker": "CARTRADE.NS",
+    "first_alerted": "2026-06-08T14:40:08",
+    "breakout_price": 2069.8,
+    "breakout_box_top": 1983.3,
+    "original_grade": "B+",
+    "original_tier": "SOLID",
+    "original_score": 79
+  },
+  {
+    "ticker": "CAPLIPOINT.NS",
+    "first_alerted": "2026-06-08T14:40:08",
+    "breakout_price": 2111.0,
+    "breakout_box_top": 2099.0,
+    "original_grade": "B",
+    "original_tier": "SOLID",
+    "original_score": 73
+  },
+  {
+    "ticker": "ZYDUSWELL.NS",
+    "first_alerted": "2026-06-08T14:40:08",
+    "breakout_price": 523.5,
+    "breakout_box_top": 522.8,
+    "original_grade": "C+",
+    "original_tier": "MARGINAL",
+    "original_score": 66
+  },
+  {
+    "ticker": "TATATECH.NS",
+    "first_alerted": "2026-06-08T14:40:08",
+    "breakout_price": 779.6,
+    "breakout_box_top": 776.0,
+    "original_grade": "C+",
+    "original_tier": "MARGINAL",
+    "original_score": 63
   }
 ]
