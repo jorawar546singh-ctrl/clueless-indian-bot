@@ -1,10 +1,18 @@
-{
-  "_instructions": [
-    "Add a position when you enter a trade in Zerodha.",
-    "Required fields per position: ticker (with .NS suffix), entry_price, shares, entry_date (YYYY-MM-DD), initial_stop.",
-    "Optional: exit_price -- fill this with your real broker fill AFTER you sell. Leave null while open.",
-    "When a stop hits, Telegram pings you. Sell at Zerodha. Then update exit_price here. Then leave it for one digest cycle so it shows in journal. Then delete the entry.",
-    "Always run position sizing before adding: max_shares = floor((account_size * 0.02) / (entry_price - initial_stop))."
-  ],
-  "positions": []
-}
+"positions": [
+    {
+      "ticker": "ZEEL.NS",
+      "shares": 50,
+      "entry_price": 112.27,
+      "entry_date": "2026-06-07",
+      "initial_stop": 104.41,
+      "notes": "ZEEL. Zerodha. Darvas breakout. 50 shares at 112.27."
+    },
+    {
+      "ticker": "ACUTAAS.NS",
+      "shares": 1,
+      "entry_price": 3392.20,
+      "entry_date": "2026-06-07",
+      "initial_stop": 3095.32,
+      "notes": "ACUTAAS. Zerodha. Darvas breakout. 1 share at 3392.20."
+    }
+  ]
