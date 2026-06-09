@@ -1,5 +1,23 @@
 [
   {
+    "timestamp": "2026-06-09T13:28:34",
+    "count": 11,
+    "tickers": [
+      "BELRISE",
+      "DATAPATTNS",
+      "ASTERDM",
+      "MAHABANK",
+      "J&KBANK",
+      "CAPLIPOINT",
+      "CARTRADE",
+      "MRPL",
+      "CANBK",
+      "CEMPRO",
+      "BANKINDIA"
+    ],
+    "clean_count": 1
+  },
+  {
     "timestamp": "2026-06-08T20:00:42",
     "count": 0,
     "tickers": [],
